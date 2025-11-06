@@ -11,10 +11,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 16  # Usar Node 16 que es más compatible
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npx cypress install
 
       - name: Run Cypress tests
-        run: npx cypress run --spec "cypress/e2e/features/**/*.feature"
+        run: |
+          export NODE_OPTIONS="--no-warnings"
+          npx cypress run --spec "cypress/e2e/features/**/*.feature"
