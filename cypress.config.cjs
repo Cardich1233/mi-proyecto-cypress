@@ -1,7 +1,6 @@
 const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
-// Importación corregida para CommonJS
 const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 
 module.exports = defineConfig({
@@ -10,12 +9,17 @@ module.exports = defineConfig({
     supportFile: "cypress/support/e2e.js",
 
     async setupNodeEvents(on, config) {
-      await addCucumberPreprocessorPlugin(on, config);
+      await addCucumberPreprocessorPlugin(on, config, {
+        json: {
+          enabled: true,
+          output: "cypress/reports/json/cucumber-report.json"
+        }
+      });
       
       on(
         "file:preprocessor",
         createBundler({
-          plugins: [createEsbuildPlugin(config)], // Cambiado aquí
+          plugins: [createEsbuildPlugin(config)],
         })
       );
 
