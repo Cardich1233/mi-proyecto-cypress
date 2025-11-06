@@ -13,21 +13,23 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install Cypress globally
         run: |
-          npm install
-          npx cypress install --force
+          npm install -g cypress@12.17.0
+          cypress install
+
+      - name: Install project dependencies
+        run: npm install
 
       - name: Run Cypress tests
         run: npx cypress run --spec "cypress/e2e/features/**/*.feature"
 
-      - name: Create basic report
-        if: always()
+      - name: Create report
         run: |
           mkdir -p cypress/reports/html
-          echo "<html><body><h1>✅ Tests Ejecutados Exitosamente</h1><p>Todos los tests de Cypress pasaron en GitHub Actions.</p></body></html>" > cypress/reports/html/index.html
+          echo "<html><body><h1>✅ Tests Completados</h1><p>Todos los tests ejecutados exitosamente en GitHub Actions.</p></body></html>" > cypress/reports/html/index.html
 
-      - name: Upload HTML Report
+      - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: cypress-report
