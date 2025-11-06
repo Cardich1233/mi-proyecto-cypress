@@ -9,9 +9,8 @@
     "cy:login": "cypress run --spec \"cypress/e2e/features/login.feature\""
   },
   "devDependencies": {
-    "cypress": "^12.17.0",
-    "@badeball/cypress-cucumber-preprocessor": "^17.1.0",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
-    "multiple-cucumber-html-reporter": "^3.5.0"
+    "cypress": "12.17.0",
+    "@badeball/cypress-cucumber-preprocessor": "17.1.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "2.1.5"
   }
 }
