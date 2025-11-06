@@ -21,11 +21,18 @@ jobs:
 
       - name: Generate HTML Report
         run: |
-          npm install multiple-cucumber-html-reporter
-          node generate-report.js
+          # Verificar que existe el archivo JSON antes de generar reporte
+          if [ -f "cypress/reports/json/cucumber-report.json" ]; then
+            npm install multiple-cucumber-html-reporter
+            node generate-report.js
+            echo "✅ Reporte HTML generado exitosamente"
+          else
+            echo "⚠️ No se encontró archivo JSON, saltando generación de reporte"
+          fi
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: cypress-report
           path: cypress/reports/html/
