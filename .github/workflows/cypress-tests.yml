@@ -11,28 +11,33 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npx cypress install
 
       - name: Run Cypress tests
         run: npx cypress run --spec "cypress/e2e/features/**/*.feature"
 
       - name: Generate HTML Report
+        if: always()
         run: |
-          # Verificar que existe el archivo JSON antes de generar reporte
-          if [ -f "cypress/reports/json/cucumber-report.json" ]; then
-            npm install multiple-cucumber-html-reporter
-            node generate-report.js
-            echo "✅ Reporte HTML generado exitosamente"
-          else
-            echo "⚠️ No se encontró archivo JSON, saltando generación de reporte"
+          # Verificar si hay resultados de tests
+          echo "📊 Generando reporte HTML..."
+          npm install multiple-cucumber-html-reporter
+          
+          # Crear reporte básico si no existe JSON
+          if [ ! -f "cypress/reports/json/cucumber-report.json" ]; then
+            echo '{"features": []}' > cypress/reports/json/cucumber-report.json
           fi
+          
+          node generate-report.js
+          echo "✅ Reporte HTML generado"
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: cypress-report
           path: cypress/reports/html/

@@ -1,17 +1,17 @@
 {
   "name": "mi-proyecto-cypress",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Pruebas automatizadas con Cypress y Cucumber para OrangeHRM",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:pim": "cypress run --spec \"cypress/e2e/features/addEmployee.feature\"",
+    "cy:login": "cypress run --spec \"cypress/e2e/features/login.feature\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.7",
-    "cypress": "^15.6.0"
+    "cypress": "^12.17.0",
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.4",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+    "multiple-cucumber-html-reporter": "^3.5.0"
   }
 }
