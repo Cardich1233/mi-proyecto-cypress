@@ -1,20 +1,15 @@
-import { defineConfig } from "cypress";
-import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
-import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
-import addCucumberEsbuildPlugin from "@badeball/cypress-cucumber-preprocessor/esbuild";
+const { defineConfig } = require("cypress");
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
+const addCucumberEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 
-export default defineConfig({
+module.exports = defineConfig({
   e2e: {
     specPattern: "cypress/e2e/features/**/*.feature",
     supportFile: "cypress/support/e2e.js",
 
     async setupNodeEvents(on, config) {
-      await addCucumberPreprocessorPlugin(on, config, {
-        json: {
-          enabled: true,
-          output: "cypress/reports/json/cucumber-report.json"
-        }
-      });
+      await addCucumberPreprocessorPlugin(on, config);
       
       on(
         "file:preprocessor",
