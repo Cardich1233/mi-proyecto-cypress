@@ -1,7 +1,8 @@
 const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
-const addCucumberEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+// Importación corregida para CommonJS
+const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 
 module.exports = defineConfig({
   e2e: {
@@ -14,7 +15,7 @@ module.exports = defineConfig({
       on(
         "file:preprocessor",
         createBundler({
-          plugins: [addCucumberEsbuildPlugin(config)],
+          plugins: [createEsbuildPlugin(config)], // Cambiado aquí
         })
       );
 
