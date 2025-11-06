@@ -9,7 +9,12 @@ export default defineConfig({
     supportFile: "cypress/support/e2e.js",
 
     async setupNodeEvents(on, config) {
-      await addCucumberPreprocessorPlugin(on, config);
+      await addCucumberPreprocessorPlugin(on, config, {
+        json: {
+          enabled: true,
+          output: "cypress/reports/json/cucumber-report.json"
+        }
+      });
       
       on(
         "file:preprocessor",
